@@ -1,4 +1,5 @@
 import type {
+  BackgroundPatternId,
   PersonalInfo,
   RemovableSectionType,
   ResumeData,
@@ -55,6 +56,42 @@ const ALL_SECTION_TYPES: RemovableSectionType[] = [
   "certifications",
 ];
 
+const VALID_BACKGROUND_PATTERNS: BackgroundPatternId[] = [
+  "none",
+  "blobs",
+  "botanical",
+  "chevronBands",
+  "bracketsRings",
+  "chevronField",
+  "rainbow",
+  "concentricArcs",
+  "dotGrid",
+  "topoLines",
+];
+
+// Patterns retired in the 2026 design refresh, mapped to their closest analog
+// in the new family so saved resumes keep a sensible decoration instead of
+// silently losing it (presentation-only — never touches content data).
+const RENAMED_BACKGROUND_PATTERNS: Record<string, BackgroundPatternId> = {
+  topographic: "topoLines",
+  halftone: "dotGrid",
+  chevron: "chevronBands",
+  "corner-brackets": "bracketsRings",
+  "rainbow-corner": "rainbow",
+  hexLines: "bracketsRings",
+};
+
+function resolveBackgroundPattern(
+  value: string | undefined,
+  fallback: BackgroundPatternId,
+): BackgroundPatternId {
+  if (!value) return fallback;
+  if (VALID_BACKGROUND_PATTERNS.includes(value as BackgroundPatternId)) {
+    return value as BackgroundPatternId;
+  }
+  return RENAMED_BACKGROUND_PATTERNS[value] ?? fallback;
+}
+
 function normalizeTheme(theme: Partial<ThemeSettings> | undefined): ThemeSettings {
   const defaults = createDefaultTheme();
   if (!theme) return defaults;
@@ -62,7 +99,7 @@ function normalizeTheme(theme: Partial<ThemeSettings> | undefined): ThemeSetting
     themeId: theme.themeId ?? defaults.themeId,
     customColor: theme.customColor ?? null,
     pageBackground: theme.pageBackground ?? defaults.pageBackground,
-    backgroundPattern: theme.backgroundPattern ?? defaults.backgroundPattern,
+    backgroundPattern: resolveBackgroundPattern(theme.backgroundPattern, defaults.backgroundPattern),
     dateCalendar: theme.dateCalendar ?? defaults.dateCalendar,
     fontFamily: theme.fontFamily ?? defaults.fontFamily,
     fontScale: theme.fontScale ?? defaults.fontScale,

@@ -33,7 +33,7 @@ async function postPdf(label, body) {
 // --- 1) PDF pipeline: default + variations (color toggle + calendars) -------
 await postPdf("default", { resume: {} });
 await postPdf("white-hijri", {
-  resume: { theme: { pageBackground: "white", backgroundPattern: "halftone", dateCalendar: "hijri" } },
+  resume: { theme: { pageBackground: "white", backgroundPattern: "dotGrid", dateCalendar: "hijri" } },
 });
 await postPdf("colored-gregorian", {
   resume: { theme: { pageBackground: "theme", backgroundPattern: "none", dateCalendar: "gregorian" } },

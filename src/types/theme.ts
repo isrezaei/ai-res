@@ -15,12 +15,14 @@ export type PageBackgroundMode = "theme" | "white";
 export type BackgroundPatternId =
   | "none"
   | "blobs"
-  | "hexLines"
-  | "topographic"
-  | "halftone"
-  | "chevron"
-  | "corner-brackets"
-  | "rainbow-corner";
+  | "botanical"
+  | "chevronBands"
+  | "bracketsRings"
+  | "chevronField"
+  | "rainbow"
+  | "concentricArcs"
+  | "dotGrid"
+  | "topoLines";
 
 export type FontFamilyId =
   | "vazirmatn"

@@ -43,7 +43,7 @@ export function BackgroundGrid() {
                   soft={colors.soft}
                   idSuffix={`thumb-${option.id}`}
                   preserveAspectRatio="xMidYMid slice"
-                  viewBox="114 -6 96 96"
+                  viewBox={option.thumbViewBox}
                 />
               </Box>
               {isActive ? (
