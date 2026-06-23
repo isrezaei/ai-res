@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { A4_HEIGHT_MM, A4_WIDTH_MM } from "@/lib/pagination";
 
 /** Base body font size in px at scale 1.0; em-based resume typography multiplies this. */
@@ -17,6 +17,12 @@ interface A4PageProps {
   decorations?: ReactNode;
   /** When true the page frame supplies no padding so children control full-bleed columns. */
   bleed?: boolean;
+  /**
+   * Extra inline style for the content wrapper — the templates pass the resume's
+   * text-tier CSS variables (`--rz-secondary`, `--rz-body`) here so every nested
+   * field can paint the right family tint without prop-drilling the colours.
+   */
+  contentVars?: CSSProperties;
   children: ReactNode;
 }
 
@@ -30,6 +36,7 @@ export function A4Page({
   lineHeight,
   decorations,
   bleed = false,
+  contentVars,
   children,
 }: A4PageProps) {
   return (
@@ -59,6 +66,7 @@ export function A4Page({
         height={autoHeight ? "auto" : "100%"}
         minHeight={`${A4_HEIGHT_MM}mm`}
         padding={bleed ? "0" : `${paddingMm}mm`}
+        style={contentVars}
       >
         {children}
       </Box>

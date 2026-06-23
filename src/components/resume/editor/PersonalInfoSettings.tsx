@@ -1,8 +1,9 @@
 "use client";
 
-import { Box, SegmentGroup, Separator, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, IconButton, SegmentGroup, Separator, Text, VStack } from "@chakra-ui/react";
 import { SettingsPopover } from "@/components/ui/SettingsPopover";
 import { SwitchField } from "@/components/ui/SwitchField";
+import { PlusIcon, TrashIcon } from "@/components/ui/icons";
 import { usePersonalInfo } from "@/hooks/store/usePersonalInfo";
 import { t } from "@/lib/i18n";
 import type { PersonalInfoFieldVisibility } from "@/types";
@@ -18,11 +19,20 @@ const FIELD_LABELS: { key: keyof PersonalInfoFieldVisibility; label: string }[] 
   { key: "nationality", label: t.personalInfo.nationality },
 ];
 
-export function PersonalInfoSettings() {
-  const { personalInfo, toggleField, setUppercaseName, setPhotoStyle } = usePersonalInfo();
+interface PersonalInfoSettingsProps {
+  triggerSize?: "2xs" | "xs" | "sm";
+}
+
+export function PersonalInfoSettings({ triggerSize = "xs" }: PersonalInfoSettingsProps = {}) {
+  const { personalInfo, toggleField, setUppercaseName, setPhotoStyle, addLink, removeLink } =
+    usePersonalInfo();
 
   return (
-    <SettingsPopover title={t.personalInfo.fields} triggerLabel={t.personalInfo.fields}>
+    <SettingsPopover
+      title={t.personalInfo.fields}
+      triggerLabel={t.personalInfo.fields}
+      triggerSize={triggerSize}
+    >
       <VStack align="stretch" gap="2.5">
         {FIELD_LABELS.map((field) => (
           <SwitchField
@@ -32,6 +42,38 @@ export function PersonalInfoSettings() {
             onChange={() => toggleField(field.key)}
           />
         ))}
+
+        <Separator borderColor="blackAlpha.100" />
+
+        {/* Links are added/removed here (the inline header only displays them). */}
+        <Box>
+          <Text fontSize="xs" fontWeight="medium" color="fg.muted" mb="2">
+            {t.personalInfo.links}
+          </Text>
+          <VStack align="stretch" gap="1.5">
+            {personalInfo.links.map((link) => (
+              <HStack key={link.id} gap="1.5">
+                <Text fontSize="xs" flex="1" minW="0" lineClamp={1}>
+                  {link.label || link.url || t.personalInfo.linkLabel}
+                </Text>
+                <IconButton
+                  aria-label={t.personalInfo.removeLink}
+                  size="2xs"
+                  variant="ghost"
+                  colorPalette="red"
+                  borderRadius="md"
+                  onClick={() => removeLink(link.id)}
+                >
+                  <TrashIcon />
+                </IconButton>
+              </HStack>
+            ))}
+            <Button size="2xs" variant="ghost" colorPalette="accent" alignSelf="flex-start" onClick={addLink}>
+              <PlusIcon />
+              {t.personalInfo.addLink}
+            </Button>
+          </VStack>
+        </Box>
 
         <Separator borderColor="blackAlpha.100" />
 

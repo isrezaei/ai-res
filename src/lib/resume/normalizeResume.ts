@@ -60,24 +60,27 @@ const VALID_BACKGROUND_PATTERNS: BackgroundPatternId[] = [
   "none",
   "blobs",
   "botanical",
-  "chevronBands",
   "bracketsRings",
   "chevronField",
-  "rainbow",
   "concentricArcs",
   "dotGrid",
   "topoLines",
 ];
 
-// Patterns retired in the 2026 design refresh, mapped to their closest analog
-// in the new family so saved resumes keep a sensible decoration instead of
-// silently losing it (presentation-only — never touches content data).
+// Patterns retired over successive design refreshes, mapped to their closest
+// surviving analog so saved resumes keep a sensible decoration instead of
+// silently losing it (presentation-only — never touches content data). The 2026
+// refresh additionally dropped the rainbow and zigzag-bands motifs: rainbow has
+// no kept analog so it falls back to "blobs", and the chevron bands collapse to
+// the surviving "chevronField" (the tiny-zigzag member of the same family).
 const RENAMED_BACKGROUND_PATTERNS: Record<string, BackgroundPatternId> = {
   topographic: "topoLines",
   halftone: "dotGrid",
-  chevron: "chevronBands",
+  chevron: "chevronField",
+  chevronBands: "chevronField",
   "corner-brackets": "bracketsRings",
-  "rainbow-corner": "rainbow",
+  "rainbow-corner": "blobs",
+  rainbow: "blobs",
   hexLines: "bracketsRings",
 };
 
@@ -92,6 +95,16 @@ function resolveBackgroundPattern(
   return RENAMED_BACKGROUND_PATTERNS[value] ?? fallback;
 }
 
+// Keep the persisted multiplier inside the slider's range so an out-of-bounds or
+// legacy value can never render the background invisibly faint or readability-
+// breaking. Matches the clamp in the theme slice / the slider's min–max.
+const BG_INTENSITY_MIN = 0.35;
+const BG_INTENSITY_MAX = 1.25;
+function normalizeBackgroundIntensity(value: number | undefined, fallback: number): number {
+  if (typeof value !== "number" || Number.isNaN(value)) return fallback;
+  return Math.min(BG_INTENSITY_MAX, Math.max(BG_INTENSITY_MIN, value));
+}
+
 function normalizeTheme(theme: Partial<ThemeSettings> | undefined): ThemeSettings {
   const defaults = createDefaultTheme();
   if (!theme) return defaults;
@@ -100,6 +113,10 @@ function normalizeTheme(theme: Partial<ThemeSettings> | undefined): ThemeSetting
     customColor: theme.customColor ?? null,
     pageBackground: theme.pageBackground ?? defaults.pageBackground,
     backgroundPattern: resolveBackgroundPattern(theme.backgroundPattern, defaults.backgroundPattern),
+    backgroundIntensity: normalizeBackgroundIntensity(
+      theme.backgroundIntensity,
+      defaults.backgroundIntensity,
+    ),
     dateCalendar: theme.dateCalendar ?? defaults.dateCalendar,
     fontFamily: theme.fontFamily ?? defaults.fontFamily,
     fontScale: theme.fontScale ?? defaults.fontScale,

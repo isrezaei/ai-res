@@ -18,7 +18,7 @@ import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
  * whatever is set here. This is the APP color only — it is deliberately kept
  * separate from the user-selectable RESUME document color (see lib/themes).
  */
-const APP_ACCENT_PALETTE = "cyan";
+const APP_ACCENT_PALETTE = "gray";
 
 /** Reference a step of the chosen accent palette's ramp as a semantic value. */
 const accentStep = (step: number) => ({
@@ -70,7 +70,7 @@ const config = defineConfig({
           value: "0 0 0 1px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.08)",
         },
         railHover: {
-          value: "0 0 0 1px rgba(6,182,212,0.40), 0 2px 6px rgba(0,0,0,0.10)",
+          value: "0 0 0 1px rgba(113,113,122,0.45), 0 2px 6px rgba(0,0,0,0.10)",
         },
         toolbar: {
           value: "0 0 0 1px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.06)",
@@ -87,11 +87,11 @@ const config = defineConfig({
           value: "inset 0 0 0 1px rgba(0,0,0,0.08)",
         },
         cardHover: {
-          value: "inset 0 0 0 1px rgba(6,182,212,0.55)",
+          value: "inset 0 0 0 1px rgba(113,113,122,0.60)",
         },
         // Selected swatch/background/template ring: accent halo + soft lift.
         ring: {
-          value: "0 0 0 2px #06b6d4, 0 4px 12px rgba(6,182,212,0.22)",
+          value: "0 0 0 2px #71717a, 0 4px 12px rgba(113,113,122,0.25)",
         },
       },
     },

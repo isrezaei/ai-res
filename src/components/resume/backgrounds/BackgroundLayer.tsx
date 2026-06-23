@@ -23,6 +23,13 @@ interface BackgroundLayerProps {
    * subtle) motif reads clearly at a small size instead of looking empty.
    */
   viewBox?: string;
+  /**
+   * Overall opacity multiplier (the «شدت پس‌زمینه» control). Applied as a single
+   * group opacity over the whole motif, so it scales every element uniformly and
+   * preserves each pattern's internal opacity relationships. Defaults to 1 (used
+   * by the thumbnails, which always show the motif at full strength for clarity).
+   */
+  intensity?: number;
 }
 
 /**
@@ -39,6 +46,7 @@ export function BackgroundLayer({
   soft,
   preserveAspectRatio = "xMidYMid slice",
   viewBox = "0 0 210 297",
+  intensity = 1,
 }: BackgroundLayerProps) {
   if (pattern === "none") return null;
 
@@ -53,16 +61,20 @@ export function BackgroundLayer({
       aria-hidden="true"
       style={{ display: "block" }}
     >
-      {pattern === "blobs" ? (
-        <g>
-          <circle cx="205" cy="-6" r="60" fill={base} opacity="0.32" />
-          <circle cx="186" cy="26" r="30" fill={soft} opacity="0.8" />
-          <circle cx="6" cy="300" r="58" fill={base} opacity="0.22" />
-          <circle cx="30" cy="285" r="26" fill={light} opacity="0.6" />
-        </g>
-      ) : (
-        <FamilyArtwork pattern={pattern} accent={accent} />
-      )}
+      {/* One group opacity scales the entire motif uniformly (lighter ↔ stronger)
+          while keeping every element's relative opacity intact. */}
+      <g opacity={intensity}>
+        {pattern === "blobs" ? (
+          <g>
+            <circle cx="205" cy="-6" r="60" fill={base} opacity="0.32" />
+            <circle cx="186" cy="26" r="30" fill={soft} opacity="0.8" />
+            <circle cx="6" cy="300" r="58" fill={base} opacity="0.22" />
+            <circle cx="30" cy="285" r="26" fill={light} opacity="0.6" />
+          </g>
+        ) : (
+          <FamilyArtwork pattern={pattern} accent={accent} />
+        )}
+      </g>
     </svg>
   );
 }

@@ -11,7 +11,7 @@ import { useResumeDocument } from "@/hooks/store/useResumeDocument";
 import { getFontStack } from "@/lib/fonts/registry";
 import { t } from "@/lib/i18n";
 import { getVisibleSections, splitColumns } from "@/lib/resume/sectionLayout";
-import { darken, mixWithWhite, resolveTheme } from "@/lib/themes";
+import { darken, mixWithWhite, resolveTheme, resumeTextVars } from "@/lib/themes";
 import type { TemplateProps } from "@/types";
 
 export function SidebarColumnTemplate({ resume, theme }: TemplateProps) {
@@ -42,9 +42,11 @@ export function SidebarColumnTemplate({ resume, theme }: TemplateProps) {
         fontScale={theme.fontScale}
         lineHeight={theme.lineHeight}
         decorations={<ResumeBackground theme={theme} colors={colors} idSuffix="sc" />}
+        contentVars={resumeTextVars(colors.secondary, colors.bodyText, colors.subtitle)}
       >
         <HStack align="stretch" gap="0" minH="inherit">
-          {/* Colored sidebar */}
+          {/* Colored sidebar — its tinted fill needs its own text tiers, so it
+              overrides the page-level secondary/body vars for everything inside. */}
           <VStack
             align="stretch"
             width="64mm"
@@ -54,6 +56,7 @@ export function SidebarColumnTemplate({ resume, theme }: TemplateProps) {
             padding={pad}
             gap={gap}
             dir="rtl"
+            style={resumeTextVars(sidebarHeading, sidebarText, sidebarHeading)}
           >
             {personalInfo.fieldVisibility.photo ? (
               <Box alignSelf="center">

@@ -11,6 +11,7 @@ export function useDesign() {
       setPageMargin: state.setPageMargin,
       setSectionSpacing: state.setSectionSpacing,
       setPageBackground: state.setPageBackground,
+      setBackgroundIntensity: state.setBackgroundIntensity,
     })),
   );
 }

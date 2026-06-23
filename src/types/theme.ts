@@ -8,6 +8,7 @@ export type ThemeId =
   | "peach"
   | "ocean"
   | "slate"
+  | "grey"
   | "indigo";
 
 export type PageBackgroundMode = "theme" | "white";
@@ -16,10 +17,8 @@ export type BackgroundPatternId =
   | "none"
   | "blobs"
   | "botanical"
-  | "chevronBands"
   | "bracketsRings"
   | "chevronField"
-  | "rainbow"
   | "concentricArcs"
   | "dotGrid"
   | "topoLines";
@@ -53,6 +52,14 @@ export interface ThemeSettings {
    */
   pageBackground: PageBackgroundMode;
   backgroundPattern: BackgroundPatternId;
+  /**
+   * Overall opacity multiplier for the decorative pattern (0.35 – 1.25). It
+   * scales every motif element uniformly — preserving each pattern's internal
+   * opacity relationships — so the user can dial the background lighter or
+   * stronger. The default sits low (soft, readability-safe pastel) and it
+   * round-trips into the PDF render identically. See {@link BackgroundLayer}.
+   */
+  backgroundIntensity: number;
   /** Calendar system used to render every resume date (content stays ISO). */
   dateCalendar: CalendarSystem;
   fontFamily: FontFamilyId;

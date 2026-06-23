@@ -1,30 +1,41 @@
 "use client";
 
-import { Box, HStack, Spinner, Text } from "@chakra-ui/react";
-import { CheckIcon } from "@/components/ui/icons";
+import { Box } from "@chakra-ui/react";
+import { Tooltip } from "@/components/ui/Tooltip";
 import { useSaveStatus } from "@/hooks/store/useSaveStatus";
-import { COLORS } from "@/lib/design/tokens";
+import { DOCK, DOCK_RADII } from "@/lib/design/tokens";
 import { t } from "@/lib/i18n";
+import { SaveCheckGlyph, SaveSpinnerGlyph } from "./dockIcons";
 
+/**
+ * Icon-only save status for the dock's end cluster (imported "Topbar Dock"):
+ * a spinning ring while the debounced field/persist lifecycle is in flight, a
+ * green check once everything is settled (idle/saved). The Persian state text is
+ * shown on hover. Same `useSaveStatus` contract as before — presentation only.
+ */
 export function SaveStatusIndicator() {
   const { saveStatus } = useSaveStatus();
-
-  if (saveStatus === "idle") return null;
-
   const isSaving = saveStatus === "saving";
+  const label = isSaving ? t.toolbar.saving : t.toolbar.autosaved;
 
   return (
-    <HStack gap="5px">
-      {isSaving ? (
-        <Spinner size="xs" color={COLORS.muted} />
-      ) : (
-        <Box as="span" display="flex" fontSize="13px" style={{ color: COLORS.saveGreen }}>
-          <CheckIcon />
-        </Box>
-      )}
-      <Text fontSize="12.5px" fontWeight="500" style={{ color: COLORS.ink500 }}>
-        {isSaving ? t.toolbar.saving : t.toolbar.autosaved}
-      </Text>
-    </HStack>
+    <Tooltip label={label}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        width="38px"
+        height="38px"
+        color={isSaving ? DOCK.spinner : DOCK.saveGreen}
+        aria-label={label}
+        style={{ borderRadius: DOCK_RADII.saveBtn }}
+      >
+        {isSaving ? (
+          <SaveSpinnerGlyph track={DOCK.spinnerTrack} />
+        ) : (
+          <SaveCheckGlyph track={DOCK.saveGreenTrack} />
+        )}
+      </Box>
+    </Tooltip>
   );
 }

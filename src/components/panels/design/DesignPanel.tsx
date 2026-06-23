@@ -18,6 +18,7 @@ export function DesignPanel() {
     setFontScale,
     setLineHeight,
     setPageBackground,
+    setBackgroundIntensity,
   } = useDesign();
 
   return (
@@ -91,7 +92,24 @@ export function DesignPanel() {
       </PanelGroup>
 
       <PanelGroup label={t.design.backgrounds}>
-        <BackgroundGrid />
+        <VStack align="stretch" gap="20px">
+          <BackgroundGrid />
+          {/* Pattern intensity — the soft default keeps text readable; the user can
+              dial the whole pattern lighter or stronger (scales it uniformly). */}
+          {theme.backgroundPattern !== "none" ? (
+            <LabeledSlider
+              label={t.design.backgroundIntensity}
+              value={theme.backgroundIntensity}
+              min={0.35}
+              max={1.25}
+              step={0.05}
+              minLabel={t.design.lighter}
+              maxLabel={t.design.stronger}
+              valueText={`${Math.round(theme.backgroundIntensity * 100)}%`}
+              onChange={setBackgroundIntensity}
+            />
+          ) : null}
+        </VStack>
       </PanelGroup>
     </VStack>
   );

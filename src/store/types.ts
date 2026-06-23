@@ -87,6 +87,7 @@ export interface ThemeSlice {
   setCustomColor: (color: string | null) => void;
   setPageBackground: (mode: PageBackgroundMode) => void;
   setBackgroundPattern: (pattern: BackgroundPatternId) => void;
+  setBackgroundIntensity: (intensity: number) => void;
   setDateCalendar: (calendar: CalendarSystem) => void;
   setFontFamily: (fontFamily: FontFamilyId) => void;
   setFontScale: (scale: number) => void;

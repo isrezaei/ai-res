@@ -76,7 +76,8 @@ await step("pick a different theme color", async () => {
 await page.waitForTimeout(300);
 
 await step("pick a background pattern", async () => {
-  await page.getByRole("button", { name: "حباب‌های نرم" }).click();
+  // Background names are English popovers/aria-labels now (no caption captions).
+  await page.getByRole("button", { name: "Soft Blobs" }).click();
 });
 await page.waitForTimeout(300);
 

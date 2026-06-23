@@ -84,14 +84,13 @@ export const ExperienceItemBlock = memo(function ExperienceItemBlock({
             placeholder={t.experience.jobTitlePlaceholder}
             fontWeight="600"
             fontSize="sm"
-            color="#3f3f46"
+            color="var(--rz-secondary, #3f3f46)"
           />
           <SecondaryTitleField
             value={item.companyName}
             onChange={(value) => updateExperience(item.id, { companyName: value })}
             placeholder={t.experience.companyNamePlaceholder}
             accentColor={accentColor}
-            fontWeight="normal"
           />
           {item.projectLink ? (
             <EditableText
@@ -108,6 +107,7 @@ export const ExperienceItemBlock = memo(function ExperienceItemBlock({
             placeholder={t.experience.projectDescription}
             multiline
             fontSize="xs"
+            color="var(--rz-body, #3f3f46)"
           />
           <ResponsibilityListEditor
             experienceId={item.id}

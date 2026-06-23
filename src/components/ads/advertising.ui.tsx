@@ -18,8 +18,8 @@ const AdvertisingUi = ({ AdvertisingId, isShow, height = 140 }: AdvertisingUiPro
       my={"1rem"}
       rounded={"lg"}
       overflow={"hidden"}
-      border={"3px dotted"}
-      borderColor={"yellow.emphasized"}
+      border={"1px solid"}
+      borderColor={"border.emphasized"}
     >
       <Box w={"full"} rounded={"sm"}>
         <YektanetAd adId={AdvertisingId} height={height} />

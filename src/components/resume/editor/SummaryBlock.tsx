@@ -32,6 +32,7 @@ export const SummaryBlock = memo(function SummaryBlock({ direction }: SummaryBlo
         onChange={updateSummary}
         placeholder={t.summary.placeholder}
         dir={direction}
+        color="var(--rz-body, #3f3f46)"
       />
     </Box>
   );

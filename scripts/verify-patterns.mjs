@@ -24,28 +24,31 @@ const step = async (name, fn) => {
 };
 
 // The Design panel is open by default; screenshot the full thumbnail grid.
-await step("thumbnail grid renders all 10 swatches", async () => {
-  const grid = page.locator('button[aria-label="رنگین‌کمان"]');
+await step("thumbnail grid renders all 8 swatches", async () => {
+  const grid = page.locator('button[aria-label="حباب‌های نرم"]');
   await grid.waitFor({ state: "visible", timeout: 10000 });
   const labels = [
-    "ساده (سفید)", "حباب‌های نرم", "برگ و شاخه", "نوار زیگزاگ", "قاب و حلقه",
-    "زیگزاگ ریز", "رنگین‌کمان", "کمان‌های هم‌مرکز", "نقطه‌چین محو", "خطوط منحنی",
+    "ساده (سفید)", "حباب‌های نرم", "برگ و شاخه", "قاب و حلقه",
+    "زیگزاگ ریز", "کمان‌های هم‌مرکز", "نقطه‌چین محو", "خطوط منحنی",
   ];
   for (const l of labels) {
     const n = await page.locator(`button[aria-label="${l}"]`).count();
     if (n < 1) throw new Error(`missing thumbnail: ${l}`);
   }
+  // The rainbow + zigzag-bands patterns were removed — assert they are gone.
+  for (const gone of ["رنگین‌کمان", "نوار زیگزاگ"]) {
+    const n = await page.locator(`button[aria-label="${gone}"]`).count();
+    if (n > 0) throw new Error(`removed pattern still present: ${gone}`);
+  }
 });
 await page.screenshot({ path: "scripts/p-grid.png", fullPage: true });
 
-// Select each new pattern, screenshot, and confirm at least one themed motif
+// Select each pattern, screenshot, and confirm at least one themed motif
 // element actually rendered into the A4 page.
 const newPatterns = [
   ["برگ و شاخه", "botanical"],
-  ["نوار زیگزاگ", "chevronBands"],
   ["قاب و حلقه", "bracketsRings"],
   ["زیگزاگ ریز", "chevronField"],
-  ["رنگین‌کمان", "rainbow"],
   ["کمان‌های هم‌مرکز", "concentricArcs"],
   ["نقطه‌چین محو", "dotGrid"],
   ["خطوط منحنی", "topoLines"],
@@ -88,16 +91,29 @@ await step("themed pattern recolours with accent", async () => {
   console.log(`   accent recolour: ${before} -> ${after}`);
 });
 
-// Rainbow must ignore the theme (fixed palette).
-await step("rainbow ignores theme hue (fixed palette)", async () => {
-  await page.locator('button[aria-label="رنگین‌کمان"]').click();
+// Intensity slider: dragging it changes the persisted multiplier and the
+// rendered group opacity that scales the whole motif uniformly.
+await step("background intensity slider persists + scales the motif", async () => {
+  await page.locator('button[aria-label="کمان‌های هم‌مرکز"]').click();
   await page.waitForTimeout(250);
-  const strokes = await page.evaluate(() =>
-    Array.from(document.querySelectorAll(".a4-page svg line")).map((l) => l.getAttribute("stroke")),
+  const groupOpacity = () =>
+    page.evaluate(() => {
+      const g = document.querySelector(".a4-page svg > g");
+      return g ? g.getAttribute("opacity") : null;
+    });
+  const before = await groupOpacity();
+  // The intensity slider is the last slider in the design panel; nudge its thumb.
+  const thumb = page.locator('[data-scope="slider"] [role="slider"]').last();
+  await thumb.focus();
+  for (let i = 0; i < 6; i++) await page.keyboard.press("ArrowRight");
+  await page.waitForTimeout(900); // allow the debounced autosave to flush
+  const after = await groupOpacity();
+  const persisted = await page.evaluate(
+    () => JSON.parse(localStorage.getItem("ai-res:resume")).theme.backgroundIntensity,
   );
-  const expected = ["#FF9E9E", "#FFC078", "#FFE08A", "#8FD9A8", "#8FC9F0", "#B79CF0"];
-  const ok = expected.every((c) => strokes.includes(c));
-  if (!ok) throw new Error(`rainbow strokes wrong: ${JSON.stringify(strokes)}`);
+  if (before === after) throw new Error(`group opacity unchanged: ${before}`);
+  if (typeof persisted !== "number") throw new Error(`intensity not persisted: ${persisted}`);
+  console.log(`   intensity opacity ${before} -> ${after}, persisted=${persisted}`);
 });
 
 console.log("CONSOLE_ERRORS:", JSON.stringify(errors, null, 2));

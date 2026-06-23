@@ -9,13 +9,13 @@
  * one place. Styling only — no behaviour depends on this module.
  */
 export const COLORS = {
-  // App/chrome accent (Chakra `cyan`). This mirrors the Chakra `accent`
+  // App/chrome accent (Chakra `gray`). This mirrors the Chakra `accent`
   // semantic palette in `lib/chakra/system.ts` (the canonical swap point) for
-  // the few inline styles that can't use a Chakra prop. accent = cyan.600,
-  // accentHover = cyan.700, accentTint = cyan.500 @ 10%.
-  accent: "#0891b2",
-  accentHover: "#0c5c72",
-  accentTint: "rgba(6,182,212,0.10)",
+  // the few inline styles that can't use a Chakra prop. accent = gray.600,
+  // accentHover = gray.700, accentTint = gray.600 @ 10%.
+  accent: "#52525b",
+  accentHover: "#3f3f46",
+  accentTint: "rgba(82,82,91,0.10)",
   ink: "#18181b",
   ink700: "#3f3f46",
   ink600: "#52525b",
@@ -36,16 +36,16 @@ export const COLORS = {
 
 export const SHADOWS = {
   rail: "0 0 0 1px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.08)",
-  railHover: "0 0 0 1px rgba(6,182,212,0.40), 0 2px 6px rgba(0,0,0,0.10)",
+  railHover: "0 0 0 1px rgba(113,113,122,0.45), 0 2px 6px rgba(0,0,0,0.10)",
   toolbar: "0 0 0 1px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.06)",
   page: "0 0 0 1px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.08)",
   panel: "0 0 0 1px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.06)",
   card: "inset 0 0 0 1px rgba(0,0,0,0.08)",
   cardSoft: "inset 0 0 0 1px rgba(0,0,0,0.07)",
   cardFaint: "inset 0 0 0 1px rgba(0,0,0,0.06)",
-  cardHover: "inset 0 0 0 1px rgba(6,182,212,0.55)",
+  cardHover: "inset 0 0 0 1px rgba(113,113,122,0.60)",
   thumb: "0 0 0 1px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.25)",
-  ring: "0 0 0 2px #06b6d4, 0 4px 12px rgba(6,182,212,0.22)",
+  ring: "0 0 0 2px #71717a, 0 4px 12px rgba(113,113,122,0.25)",
   hairlineRing: "0 0 0 1px rgba(0,0,0,0.08)",
   badge: "0 1px 3px rgba(0,0,0,0.2)",
   avatarInset: "inset 0 0 0 1px rgba(0,0,0,0.08)",
@@ -64,6 +64,51 @@ export const RADII = {
   control: "6px",
   chipDelete: "4px",
   full: "9999px",
+} as const;
+
+/**
+ * Topbar "Dock" — the geometry (sizes, radii, glass, shadow stacks) is a faithful
+ * port of the imported "Topbar Dock" design, but every colour is mapped onto the
+ * app's existing zinc/gray chrome tokens above (NOT the design's slate ramp), so
+ * the dock stays inside the app's colour system. Three floating glass clusters:
+ * the panel toggle (RTL start), the centered icon-only tool dock, and the
+ * save + avatar cluster (RTL end).
+ */
+export const DOCK = {
+  // Frosted-white clusters floating over the workspace.
+  glassBg: "rgba(255,255,255,0.92)",
+  blur: "blur(12px)",
+  border: COLORS.line07,
+  borderStrong: COLORS.line08,
+  divider: COLORS.line08,
+  // Tool states — app zinc chrome (active = near-black ink pill).
+  activeBg: COLORS.ink,
+  activeFg: COLORS.white,
+  idleFg: COLORS.ink600,
+  hoverBg: COLORS.line06,
+  hoverFg: COLORS.ink,
+  // Save + avatar.
+  saveGreen: COLORS.saveGreen,
+  saveGreenTrack: "rgba(22,163,74,0.28)",
+  spinner: COLORS.ink500,
+  spinnerTrack: "rgba(113,113,122,0.25)",
+  avatarBg: COLORS.track,
+  avatarFg: COLORS.ink500,
+} as const;
+
+/** Dock shadow stacks (design geometry, app-neutral black tint). */
+export const DOCK_SHADOWS = {
+  center: "0 12px 34px -10px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.05)",
+  side: "0 6px 18px -8px rgba(0,0,0,0.18)",
+} as const;
+
+/** Dock corner radii, ported 1:1 from the design. */
+export const DOCK_RADII = {
+  toggle: "14px",
+  center: "19px",
+  save: "15px",
+  tool: "13px",
+  saveBtn: "11px",
 } as const;
 
 /** Hatched "advertising space" placeholder fill used in every side panel. */

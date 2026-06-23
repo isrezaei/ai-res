@@ -31,13 +31,14 @@ export const ProjectItemBlock = memo(function ProjectItemBlock({
             placeholder={t.projects.namePlaceholder}
             fontWeight="bold"
             fontSize="sm"
+            color={`var(--rz-secondary, ${accentColor})`}
           />
           <EditableText
             value={item.role}
             onChange={(value) => updateProject(item.id, { role: value })}
             placeholder={t.projects.rolePlaceholder}
             fontSize="xs"
-            color={accentColor}
+            color={`var(--rz-secondary, ${accentColor})`}
           />
         </HStack>
         <EditableText
@@ -53,6 +54,7 @@ export const ProjectItemBlock = memo(function ProjectItemBlock({
           placeholder={t.projects.descriptionPlaceholder}
           multiline
           fontSize="xs"
+          color="var(--rz-body, #3f3f46)"
         />
       </VStack>
 

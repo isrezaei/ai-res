@@ -1,9 +1,30 @@
+import type { CSSProperties } from "react";
 import type { ThemeSettings } from "@/types";
 import { getThemePreset } from "./presets";
 
 export interface ResolvedTheme {
-  /** Primary accent used for section titles, company names, sidebar fills. */
+  /** Strong accent used for section HEADINGS (the most prominent text tier). */
   accent: string;
+  /**
+   * Secondary title colour — the same hue as {@link accent} but a notch softer
+   * (a lighter family tint). Used for the primary entry titles (job/role, degree,
+   * project/cert name) so they read as one family, one step down from the section
+   * heading. Also the "paired" colour shown on each swatch.
+   */
+  secondary: string;
+  /**
+   * Subtitle colour — about two steps lighter than {@link accent} (clearly lighter
+   * than {@link secondary}). Used for the entry SUBTITLES (company, university, the
+   * job title under the name) which render bold, so this softer tint stays legible
+   * while sitting visually beneath the primary entry title.
+   */
+  subtitle: string;
+  /**
+   * Body/description text — a soft, desaturated tint of the same family. Readable
+   * but recessive, it sits a tier below the secondary titles and is used ONLY for
+   * prose (summaries, descriptions, achievements, responsibilities).
+   */
+  bodyText: string;
   /** Soft tint used for the page background and chips. */
   soft: string;
   /** Mid-tone used for decorative shapes. */
@@ -43,6 +64,35 @@ export function darken(hex: string, ratio: number): string {
   return rgbToHex(r * (1 - ratio), g * (1 - ratio), b * (1 - ratio));
 }
 
+/** Linear blend of two colours: `ratio` 0 → base, 1 → overlay. */
+function mix(base: string, overlay: string, ratio: number): string {
+  const [r1, g1, b1] = hexToRgb(base);
+  const [r2, g2, b2] = hexToRgb(overlay);
+  return rgbToHex(
+    r1 + (r2 - r1) * ratio,
+    g1 + (g2 - g1) * ratio,
+    b1 + (b2 - b1) * ratio,
+  );
+}
+
+/**
+ * The softer text tiers derived from a single accent so the whole resume reads as
+ * one colour family. `secondary` is a lightly-lightened accent (one notch) for the
+ * primary entry titles; `subtitle` is ~two steps lighter for the bold entry
+ * subtitles; `bodyText` is a desaturated, soft family tint (mostly a neutral ink
+ * with a faint accent cast) for readable prose.
+ */
+const BODY_INK = "#4a4a52";
+export function deriveSecondary(accent: string): string {
+  return mixWithWhite(accent, 0.18);
+}
+export function deriveSubtitle(accent: string): string {
+  return mixWithWhite(accent, 0.38);
+}
+export function deriveBodyText(accent: string): string {
+  return mix(BODY_INK, accent, 0.16);
+}
+
 /**
  * Single source of truth for the colors a template paints with. When the user
  * picks a custom color it overrides the preset; otherwise the preset is used.
@@ -53,6 +103,9 @@ export function resolveTheme(theme: ThemeSettings): ResolvedTheme {
   if (theme.customColor) {
     return {
       accent: theme.customColor,
+      secondary: deriveSecondary(theme.customColor),
+      subtitle: deriveSubtitle(theme.customColor),
+      bodyText: deriveBodyText(theme.customColor),
       base: mixWithWhite(theme.customColor, 0.45),
       soft: mixWithWhite(theme.customColor, 0.88),
       contrastText: "#FFFFFF",
@@ -61,8 +114,30 @@ export function resolveTheme(theme: ThemeSettings): ResolvedTheme {
 
   return {
     accent: preset.accentDark,
+    secondary: deriveSecondary(preset.accentDark),
+    subtitle: deriveSubtitle(preset.accentDark),
+    bodyText: deriveBodyText(preset.accentDark),
     base: preset.base,
     soft: preset.soft,
     contrastText: preset.contrastText,
   };
+}
+
+/**
+ * The resume text-tier colours as CSS custom properties, applied once on a page
+ * (or column) content wrapper. Nested fields read `var(--rz-secondary)` for the
+ * primary entry titles, `var(--rz-subtitle)` for the bold entry subtitles, and
+ * `var(--rz-body)` for prose, so the family hierarchy lives in one place instead
+ * of being threaded through every block as a prop.
+ */
+export function resumeTextVars(
+  secondary: string,
+  bodyText: string,
+  subtitle: string,
+): CSSProperties {
+  return {
+    "--rz-secondary": secondary,
+    "--rz-subtitle": subtitle,
+    "--rz-body": bodyText,
+  } as CSSProperties;
 }

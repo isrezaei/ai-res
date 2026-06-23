@@ -1,8 +1,9 @@
 "use client";
 
-import { Box, chakra, Grid, Text, VStack } from "@chakra-ui/react";
+import { Box, chakra, Grid } from "@chakra-ui/react";
 import { BackgroundLayer } from "@/components/resume/backgrounds/BackgroundLayer";
 import { CheckIcon } from "@/components/ui/icons";
+import { Tooltip } from "@/components/ui/Tooltip";
 import { useTheme } from "@/hooks/store/useTheme";
 import { backgroundOptions } from "@/lib/backgrounds/options";
 import { COLORS, RADII, SHADOWS } from "@/lib/design/tokens";
@@ -13,16 +14,17 @@ export function BackgroundGrid() {
   const colors = resolveTheme(theme);
 
   return (
-    <Grid templateColumns="repeat(4, 1fr)" gap="14px 10px">
+    <Grid templateColumns="repeat(4, 1fr)" gap="10px">
       {backgroundOptions.map((option) => {
         const isActive = theme.backgroundPattern === option.id;
         return (
-          <VStack key={option.id} gap="7px">
+          // The pattern name shows only as a hover popover (English) — there is no
+          // caption under the thumbnail, so the tooltip is the accessible name too.
+          <Tooltip key={option.id} label={option.name}>
             <chakra.button
               type="button"
-              aria-label={option.label}
+              aria-label={option.name}
               aria-pressed={isActive}
-              title={option.label}
               position="relative"
               width="100%"
               aspectRatio="1"
@@ -65,15 +67,7 @@ export function BackgroundGrid() {
                 </Box>
               ) : null}
             </chakra.button>
-            <Text
-              fontSize="10.5px"
-              fontWeight="500"
-              lineClamp={1}
-              style={{ color: isActive ? COLORS.accent : COLORS.ink700 }}
-            >
-              {option.label}
-            </Text>
-          </VStack>
+          </Tooltip>
         );
       })}
     </Grid>

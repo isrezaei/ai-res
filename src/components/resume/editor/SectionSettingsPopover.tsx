@@ -20,7 +20,7 @@ export function SectionSettingsPopover({ section }: SectionSettingsPopoverProps)
   const { setSectionDirection } = useSectionActions();
 
   return (
-    <SettingsPopover title={section.title} triggerLabel={t.sectionToolbar.settings}>
+    <SettingsPopover title={section.title} triggerLabel={t.sectionToolbar.settings} triggerSize="2xs">
       <VStack align="stretch" gap="2">
         <Text fontSize="xs" fontWeight="medium" color="fg.muted">
           {t.sectionPanel.direction}

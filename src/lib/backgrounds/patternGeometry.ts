@@ -2,9 +2,9 @@
  * Geometry for the résumé background pattern family, ported 1:1 from the
  * Claude Design "Resume Pattern Family" handoff (Board.dc.html · renderVals).
  * Every value is computed once at module load in the A4 user space (210 × 297)
- * at the design's default intensity (1). Colour is applied by the renderer via
- * `currentColor`, so a single theme hue retints the whole set — the lone
- * exception is the rainbow, which keeps its fixed pastel palette.
+ * at the design's baseline opacities. Colour is applied by the renderer via
+ * `currentColor`, so a single theme hue retints the whole set, and the renderer
+ * scales the overall strength with one group opacity (the «شدت پس‌زمینه» control).
  */
 
 /** 1-decimal coordinate formatter, matching the design's path precision. */
@@ -74,31 +74,10 @@ function buildBotanical() {
   return { blobs, stems, leaves, sdots };
 }
 export const BOTANICAL = buildBotanical();
-export const BOTANICAL_OPACITY = { blob: 0.2, stem: 0.34, leaf: 0.28, dot: 0.5 };
-
-// ---- 02 · CHEVRON BANDS --------------------------------------------------
-export interface Polyline {
-  pts: string;
-  o: number;
-}
-
-function buildChevronBands(): Polyline[] {
-  const zig: Polyline[] = [];
-  for (let i = 0; i < 16; i++) {
-    const y0 = 8 + i * 7.6;
-    const xs = 56 + i * 7;
-    if (xs > 198) break;
-    const pts: string[] = [];
-    let up = true;
-    for (let x = xs; x <= 213; x += 14) {
-      pts.push(`${f(x)},${f(up ? y0 : y0 + 8)}`);
-      up = !up;
-    }
-    zig.push({ pts: pts.join(" "), o: round3(0.2 - i * 0.011) });
-  }
-  return zig;
-}
-export const CHEVRON_BANDS = buildChevronBands();
+// The foliage (stems + leaves) is deliberately LIGHTER than the solid geometric
+// elements (blobs + dots), while every part stays the same single hue — so the
+// botanical motif reads as one cohesive colour with the leaves as a softer tint.
+export const BOTANICAL_OPACITY = { blob: 0.22, stem: 0.16, leaf: 0.14, dot: 0.46 };
 
 // ---- 03 · BRACKETS + RINGS ----------------------------------------------
 export interface Mark {
@@ -149,23 +128,6 @@ function buildChevronField(): OpacityPath[] {
   return chev;
 }
 export const CHEVRON_FIELD = buildChevronField();
-
-// ---- 05 · RAINBOW (fixed palette, never themed) -------------------------
-export interface Stripe {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  stroke: string;
-}
-export const RAINBOW_STRIPES: Stripe[] = [
-  { x1: 150, y1: -8, x2: 112, y2: 38, stroke: "#FF9E9E" },
-  { x1: 159, y1: -8, x2: 121, y2: 38, stroke: "#FFC078" },
-  { x1: 168, y1: -8, x2: 130, y2: 38, stroke: "#FFE08A" },
-  { x1: 177, y1: -8, x2: 139, y2: 38, stroke: "#8FD9A8" },
-  { x1: 186, y1: -8, x2: 148, y2: 38, stroke: "#8FC9F0" },
-  { x1: 195, y1: -8, x2: 157, y2: 38, stroke: "#B79CF0" },
-];
 
 // ---- 06 · CONCENTRIC ARCS -----------------------------------------------
 function buildArcs(): OpacityPath[] {

@@ -40,11 +40,13 @@ export function SettingsPopover({
         <IconButton
           aria-label={triggerLabel}
           size={triggerSize}
-          variant="ghost"
+          // Matches the other HoverFrame controls: subtle normally, solid while
+          // the popover is open (its "active" state).
+          variant={open ? "solid" : "subtle"}
           colorPalette="gray"
           borderRadius="md"
           className="no-print"
-          _hover={{ color: "accent.fg", bg: "bg.muted" }}
+          _focusVisible={{ bg: "gray.solid", color: "gray.contrast" }}
         >
           <GearIcon />
         </IconButton>

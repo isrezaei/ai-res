@@ -8,7 +8,7 @@
 export {
   TbPlus as PlusIcon,
   TbTrash as TrashIcon,
-  TbSettings as GearIcon,
+  TbSettings2 as GearIcon,
   TbCamera as CameraIcon,
   TbEye as EyeIcon,
   TbDownload as DownloadIcon,

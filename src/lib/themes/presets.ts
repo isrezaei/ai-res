@@ -74,6 +74,17 @@ export const themePresets: Record<ThemeId, ThemePreset> = {
     accentDark: "#3C4A56",
     contrastText: "#FFFFFF",
   },
+  // A true neutral grey (near-zero saturation), distinct from the blue-grey
+  // "slate" above. Follows the same token shape so patterns, accents, titles and
+  // swatches all work in grey exactly like every coloured theme.
+  grey: {
+    id: "grey",
+    label: t.theme.names.grey,
+    soft: "#F3F4F5",
+    base: "#C3C6CA",
+    accentDark: "#4B4F55",
+    contrastText: "#FFFFFF",
+  },
   indigo: {
     id: "indigo",
     label: t.theme.names.indigo,
@@ -96,6 +107,7 @@ export const themeOrder: ThemeId[] = [
   "peach",
   "ocean",
   "slate",
+  "grey",
 ];
 
 export function getThemePreset(themeId: ThemeId): ThemePreset {

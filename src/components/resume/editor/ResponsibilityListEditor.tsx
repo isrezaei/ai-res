@@ -91,6 +91,7 @@ export const ResponsibilityListEditor = memo(function ResponsibilityListEditor({
             onChange={(value) => updateResponsibility(experienceId, responsibility.id, value)}
             placeholder={t.experience.responsibilityPlaceholder}
             fontSize="0.8em"
+            color="var(--rz-body, #3f3f46)"
             onEnter={() => handleEnter(responsibility.id)}
             onBackspaceWhenEmpty={() => handleBackspaceWhenEmpty(index, responsibility.id)}
           />

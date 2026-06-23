@@ -28,7 +28,7 @@ interface ContactFieldProps {
 function ContactField({ icon, iconColor, children }: ContactFieldProps) {
   return (
     <HStack gap="1" minW="0">
-      <chakra.span fontSize="0.78em" color={iconColor} flexShrink={0} display="inline-flex">
+      <chakra.span fontSize="0.95em" color={iconColor} flexShrink={0} display="inline-flex">
         {icon}
       </chakra.span>
       {children}
@@ -41,7 +41,7 @@ export function PersonalInfoContacts({ accentColor, color = "#52525b" }: Persona
   const { fieldVisibility } = personalInfo;
 
   return (
-    <Wrap gapX="3.5" gapY="1" align="center">
+    <Wrap gapX="2" gapY="1" align="center">
       {fieldVisibility.phone ? (
         <ContactField icon={<PhoneIcon />} iconColor={accentColor}>
           <EditableText

@@ -52,6 +52,9 @@ export function createDefaultTheme(): ThemeSettings {
     customColor: null,
     pageBackground: "theme",
     backgroundPattern: "blobs",
+    // Soft, readability-safe default: the pattern renders at 70% of its baseline
+    // opacity (the «شدت پس‌زمینه» slider lets the user dial it lighter/stronger).
+    backgroundIntensity: 0.7,
     dateCalendar: "jalali",
     fontFamily: "vazirmatn",
     fontScale: 1,

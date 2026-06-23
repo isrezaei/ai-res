@@ -13,7 +13,7 @@ import {
 import { useTheme } from "@/hooks/store/useTheme";
 import { COLORS, RADII, SHADOWS } from "@/lib/design/tokens";
 import { t } from "@/lib/i18n";
-import { resolveTheme, themeOrder, themePresets } from "@/lib/themes";
+import { deriveSecondary, resolveTheme, themeOrder, themePresets } from "@/lib/themes";
 
 export function ColorSwatchGrid() {
   const { theme, setThemeId, setCustomColor } = useTheme();
@@ -22,10 +22,14 @@ export function ColorSwatchGrid() {
 
   return (
     <Box>
-      <Grid templateColumns="repeat(5, 1fr)" gap="14px 12px">
+      <Grid templateColumns="repeat(5, 1fr)" gap="8px 6px">
         {themeOrder.map((id) => {
           const preset = themePresets[id];
           const isActive = !customActive && theme.themeId === id;
+          // Each swatch shows the colour PAIR for that theme: the strong accent
+          // (section-heading tier) on one half and its paired secondary tint
+          // (entry-title tier) on the other, split on a diagonal.
+          const swatchFill = `linear-gradient(135deg, ${preset.accentDark} 0 50%, ${deriveSecondary(preset.accentDark)} 50% 100%)`;
           // Selection is shown by an inner white + hairline ring drawn on top of
           // the swatch — borderless, calm, matching the 2026 reference.
           return (
@@ -36,13 +40,15 @@ export function ColorSwatchGrid() {
               aria-pressed={isActive}
               title={preset.label}
               position="relative"
-              boxSize="30px"
-              borderRadius="full"
+              // Taller elongated pill with a FULL corner radius (stadium ends),
+              // sitting close together via the tight grid gap.
+              width="100%"
+              height="25px"
+              borderRadius={"2xl"}
               p="0"
-              justifySelf="center"
-              bg={preset.base}
+              style={{ background: swatchFill }}
               transition="transform 0.1s"
-              _hover={{ transform: "scale(1.1)" }}
+              _hover={{ transform: "scale(1.06)" }}
               onClick={() => setThemeId(id)}
             >
               <Box

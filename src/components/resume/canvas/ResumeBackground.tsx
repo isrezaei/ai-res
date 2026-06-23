@@ -17,6 +17,7 @@ export function ResumeBackground({ theme, colors, idSuffix }: ResumeBackgroundPr
       base={colors.base}
       soft={colors.soft}
       idSuffix={idSuffix}
+      intensity={theme.backgroundIntensity}
     />
   );
 }

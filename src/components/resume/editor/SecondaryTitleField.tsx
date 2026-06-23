@@ -16,9 +16,11 @@ interface SecondaryTitleFieldProps {
 /**
  * The "secondary title" of any section entry — the job title under the name in
  * Personal Info, the company under a role in Experience, the university under a
- * degree in Education. It always paints in the user's selected RESUME accent so
- * every section's subtitle reads as one consistent family. Reusing this single
- * component is what keeps that rule in one place; pass the resolved theme accent.
+ * degree in Education. It paints in the resume's `--rz-subtitle` tier (~two steps
+ * lighter than the accent, a step below the primary entry title) so every subtitle
+ * reads as one consistent family. The page/column sets that variable;
+ * `accentColor` is the fallback for any context that hasn't set it. Renders
+ * BOLD by default so the lighter (two-steps) secondary tint stays legible.
  */
 export const SecondaryTitleField = memo(function SecondaryTitleField({
   value,
@@ -26,14 +28,14 @@ export const SecondaryTitleField = memo(function SecondaryTitleField({
   placeholder,
   accentColor,
   fontSize = "sm",
-  fontWeight = "medium",
+  fontWeight = "bold",
 }: SecondaryTitleFieldProps) {
   return (
     <EditableText
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      color={accentColor}
+      color={`var(--rz-subtitle, ${accentColor})`}
       fontSize={fontSize}
       fontWeight={fontWeight}
     />

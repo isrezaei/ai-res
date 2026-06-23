@@ -31,6 +31,7 @@ export const CertificationItemBlock = memo(function CertificationItemBlock({
           placeholder={t.certifications.namePlaceholder}
           fontSize="sm"
           fontWeight="bold"
+          color={`var(--rz-secondary, ${accentColor})`}
         />
         <HStack gap="2" fontSize="xs" color="fg.muted">
           <EditableText
@@ -38,7 +39,7 @@ export const CertificationItemBlock = memo(function CertificationItemBlock({
             onChange={(value) => updateCertification(item.id, { issuer: value })}
             placeholder={t.certifications.issuerPlaceholder}
             fontSize="xs"
-            color={accentColor}
+            color={`var(--rz-secondary, ${accentColor})`}
           />
           <DateField
             value={item.date}

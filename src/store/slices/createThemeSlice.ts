@@ -22,6 +22,8 @@ export const createThemeSlice: SliceCreator<ThemeSlice> = (set) => ({
   setCustomColor: (customColor) => patchTheme(set, () => ({ customColor })),
   setPageBackground: (mode) => patchTheme(set, () => ({ pageBackground: mode })),
   setBackgroundPattern: (pattern) => patchTheme(set, () => ({ backgroundPattern: pattern })),
+  setBackgroundIntensity: (intensity) =>
+    patchTheme(set, () => ({ backgroundIntensity: clamp(intensity, 0.35, 1.25) })),
   setDateCalendar: (dateCalendar) => patchTheme(set, () => ({ dateCalendar })),
   setFontFamily: (fontFamily) => patchTheme(set, () => ({ fontFamily })),
   setFontScale: (scale) => patchTheme(set, () => ({ fontScale: clamp(scale, 0.85, 1.3) })),

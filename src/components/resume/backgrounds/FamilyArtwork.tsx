@@ -6,26 +6,23 @@ import {
   BRACKETS_MARKS,
   BRACKETS_OPACITY,
   BRACKETS_RINGS,
-  CHEVRON_BANDS,
   CHEVRON_FIELD,
   CONCENTRIC_ARCS,
   DOT_GRID,
-  RAINBOW_STRIPES,
   TOPO_LINES,
 } from "@/lib/backgrounds/patternGeometry";
 
 interface FamilyArtworkProps {
   pattern: BackgroundPatternId;
-  /** Single theme hue every motif recolours with (the rainbow ignores it). */
+  /** Single theme hue every motif recolours with. */
   accent: string;
 }
 
 /**
  * The "Resume Pattern Family" motifs (design source of truth). Each is
  * corner-anchored and drawn in one theme hue via `currentColor` at the design's
- * opacities, so they recolour with the user's accent. The rainbow is the lone
- * fixed-palette exception. Pure SVG (no filters/defs) keeps the browser preview
- * and the Puppeteer PDF identical.
+ * opacities, so they recolour with the user's accent. Pure SVG (no filters/defs)
+ * keeps the browser preview and the Puppeteer PDF identical.
  */
 export function FamilyArtwork({ pattern, accent }: FamilyArtworkProps) {
   switch (pattern) {
@@ -49,14 +46,6 @@ export function FamilyArtwork({ pattern, accent }: FamilyArtworkProps) {
           ))}
         </g>
       );
-    case "chevronBands":
-      return (
-        <g style={{ color: accent }} fill="none" stroke="currentColor" strokeWidth={0.7} strokeLinejoin="round" strokeLinecap="round">
-          {CHEVRON_BANDS.map((z, i) => (
-            <polyline key={i} points={z.pts} strokeOpacity={z.o} />
-          ))}
-        </g>
-      );
     case "bracketsRings":
       return (
         <g style={{ color: accent }} fill="none" stroke="currentColor" strokeWidth={1} strokeOpacity={BRACKETS_OPACITY} strokeLinecap="round">
@@ -73,14 +62,6 @@ export function FamilyArtwork({ pattern, accent }: FamilyArtworkProps) {
         <g style={{ color: accent }} fill="none" stroke="currentColor" strokeWidth={0.7} strokeLinecap="round" strokeLinejoin="round">
           {CHEVRON_FIELD.map((c, i) => (
             <path key={i} d={c.d} strokeOpacity={c.o} />
-          ))}
-        </g>
-      );
-    case "rainbow":
-      return (
-        <g strokeWidth={5} strokeLinecap="round" fill="none">
-          {RAINBOW_STRIPES.map((s, i) => (
-            <line key={i} x1={s.x1} y1={s.y1} x2={s.x2} y2={s.y2} stroke={s.stroke} />
           ))}
         </g>
       );

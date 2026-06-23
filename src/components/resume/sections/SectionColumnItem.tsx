@@ -1,6 +1,6 @@
 "use client";
 
-import { VStack } from "@chakra-ui/react";
+import { SectionHoverFrame } from "@/components/resume/editor/SectionHoverFrame";
 import { SectionTitleBlock } from "@/components/resume/editor/SectionTitleBlock";
 import type { ResumeData, SectionMeta } from "@/types";
 import { SectionContent } from "./SectionContent";
@@ -24,9 +24,13 @@ export function SectionColumnItem({
   showRule = false,
 }: SectionColumnItemProps) {
   return (
-    <VStack align="stretch" gap="1">
-      <SectionTitleBlock section={section} accentColor={titleColor ?? accent} showRule={showRule} />
+    <SectionHoverFrame
+      section={section}
+      title={
+        <SectionTitleBlock section={section} accentColor={titleColor ?? accent} showRule={showRule} />
+      }
+    >
       <SectionContent section={section} resume={resume} accent={accent} soft={soft} />
-    </VStack>
+    </SectionHoverFrame>
   );
 }

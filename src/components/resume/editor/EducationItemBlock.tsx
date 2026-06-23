@@ -66,14 +66,13 @@ export const EducationItemBlock = memo(function EducationItemBlock({
             placeholder={t.education.degreePlaceholder}
             fontWeight="600"
             fontSize="sm"
-            color="#3f3f46"
+            color="var(--rz-secondary, #3f3f46)"
           />
           <SecondaryTitleField
             value={item.university}
             onChange={(value) => updateEducation(item.id, { university: value })}
             placeholder={t.education.universityPlaceholder}
             accentColor={accentColor}
-            fontWeight="normal"
           />
           <EditableText
             value={item.gpa}
@@ -88,6 +87,7 @@ export const EducationItemBlock = memo(function EducationItemBlock({
             placeholder={t.education.achievements}
             multiline
             fontSize="xs"
+            color="var(--rz-body, #3f3f46)"
           />
         </VStack>
       </HStack>

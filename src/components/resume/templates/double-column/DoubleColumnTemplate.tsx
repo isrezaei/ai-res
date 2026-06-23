@@ -7,7 +7,7 @@ import { PersonalInfoBlock } from "@/components/resume/editor/PersonalInfoBlock"
 import { SectionColumnItem } from "@/components/resume/sections/SectionColumnItem";
 import { getFontStack } from "@/lib/fonts/registry";
 import { getVisibleSections, splitColumns } from "@/lib/resume/sectionLayout";
-import { resolveTheme } from "@/lib/themes";
+import { resolveTheme, resumeTextVars } from "@/lib/themes";
 import type { TemplateProps } from "@/types";
 
 export function DoubleColumnTemplate({ resume, theme }: TemplateProps) {
@@ -28,6 +28,7 @@ export function DoubleColumnTemplate({ resume, theme }: TemplateProps) {
         fontScale={theme.fontScale}
         lineHeight={theme.lineHeight}
         decorations={<ResumeBackground theme={theme} colors={colors} idSuffix="dc" />}
+        contentVars={resumeTextVars(colors.secondary, colors.bodyText, colors.subtitle)}
       >
         <VStack align="stretch" gap={gap}>
           <PersonalInfoBlock accentColor={colors.accent} />

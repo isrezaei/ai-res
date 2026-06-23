@@ -1,7 +1,7 @@
 "use client";
 
-import { Button, chakra, HStack, Wrap } from "@chakra-ui/react";
-import { LinkIcon, PlusIcon } from "@/components/ui/icons";
+import { chakra, HStack, Wrap } from "@chakra-ui/react";
+import { LinkIcon } from "@/components/ui/icons";
 import { usePersonalInfo } from "@/hooks/store/usePersonalInfo";
 import { t } from "@/lib/i18n";
 import { EditableText } from "./EditableText";
@@ -10,13 +10,18 @@ interface LinksEditorProps {
   accentColor: string;
 }
 
+/**
+ * Inline display of the personal-info links (icon + editable label + url). Adding
+ * and removing links is handled from the personal-info settings popover (the
+ * header's hover-settings element), so this surface only edits existing links.
+ */
 export function LinksEditor({ accentColor }: LinksEditorProps) {
-  const { personalInfo, addLink, updateLink, removeLink } = usePersonalInfo();
+  const { personalInfo, updateLink } = usePersonalInfo();
 
   return (
-    <Wrap gap="3" align="center">
+    <Wrap gap="2" align="center">
       {personalInfo.links.map((link) => (
-        <HStack key={link.id} gap="1" className="group/link" color={accentColor}>
+        <HStack key={link.id} gap="1" color={accentColor}>
           <chakra.span fontSize="xs" color={accentColor}>
             <LinkIcon />
           </chakra.span>
@@ -34,23 +39,8 @@ export function LinksEditor({ accentColor }: LinksEditorProps) {
             fontSize="xs"
             color="fg.muted"
           />
-          <chakra.button
-            type="button"
-            className="no-print"
-            fontSize="xs"
-            opacity="0.5"
-            _hover={{ opacity: 1 }}
-            onClick={() => removeLink(link.id)}
-            aria-label={t.personalInfo.removeLink}
-          >
-            ×
-          </chakra.button>
         </HStack>
       ))}
-      <Button size="2xs" variant="ghost" colorPalette="accent" className="no-print" onClick={addLink}>
-        <PlusIcon />
-        {t.personalInfo.addLink}
-      </Button>
     </Wrap>
   );
 }
