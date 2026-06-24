@@ -43,8 +43,6 @@ export type CalendarSystem = "jalali" | "hijri" | "gregorian";
 
 export interface ThemeSettings {
   themeId: ThemeId;
-  /** Optional custom override color; when set it takes precedence over the preset accent. */
-  customColor: string | null;
   /**
    * Whether the A4 page is painted with the theme tint ("theme") or kept plain
    * white ("white"). Independent of {@link backgroundPattern} — every

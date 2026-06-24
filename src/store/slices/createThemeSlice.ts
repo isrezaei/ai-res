@@ -18,8 +18,7 @@ function patchTheme(
 }
 
 export const createThemeSlice: SliceCreator<ThemeSlice> = (set) => ({
-  setThemeId: (themeId) => patchTheme(set, () => ({ themeId, customColor: null })),
-  setCustomColor: (customColor) => patchTheme(set, () => ({ customColor })),
+  setThemeId: (themeId) => patchTheme(set, () => ({ themeId })),
   setPageBackground: (mode) => patchTheme(set, () => ({ pageBackground: mode })),
   setBackgroundPattern: (pattern) => patchTheme(set, () => ({ backgroundPattern: pattern })),
   setBackgroundIntensity: (intensity) =>

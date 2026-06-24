@@ -110,7 +110,6 @@ function normalizeTheme(theme: Partial<ThemeSettings> | undefined): ThemeSetting
   if (!theme) return defaults;
   return {
     themeId: theme.themeId ?? defaults.themeId,
-    customColor: theme.customColor ?? null,
     pageBackground: theme.pageBackground ?? defaults.pageBackground,
     backgroundPattern: resolveBackgroundPattern(theme.backgroundPattern, defaults.backgroundPattern),
     backgroundIntensity: normalizeBackgroundIntensity(

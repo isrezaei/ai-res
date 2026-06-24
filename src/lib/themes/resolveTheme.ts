@@ -94,23 +94,11 @@ export function deriveBodyText(accent: string): string {
 }
 
 /**
- * Single source of truth for the colors a template paints with. When the user
- * picks a custom color it overrides the preset; otherwise the preset is used.
+ * Single source of truth for the colors a template paints with: the selected
+ * preset's accent drives the whole family (heading → secondary → subtitle → body).
  */
 export function resolveTheme(theme: ThemeSettings): ResolvedTheme {
   const preset = getThemePreset(theme.themeId);
-
-  if (theme.customColor) {
-    return {
-      accent: theme.customColor,
-      secondary: deriveSecondary(theme.customColor),
-      subtitle: deriveSubtitle(theme.customColor),
-      bodyText: deriveBodyText(theme.customColor),
-      base: mixWithWhite(theme.customColor, 0.45),
-      soft: mixWithWhite(theme.customColor, 0.88),
-      contrastText: "#FFFFFF",
-    };
-  }
 
   return {
     accent: preset.accentDark,
