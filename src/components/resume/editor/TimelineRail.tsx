@@ -41,7 +41,7 @@ export const TimelineRail = memo(function TimelineRail({ accentColor }: Timeline
         height="9px"
         borderRadius="full"
         bg={accentColor}
-        boxShadow="0 0 0 3px #fff"
+        boxShadow="0 0 0 3px #fff, 0 0 0 4px rgba(0,0,0,0.06)"
       />
     </Box>
   );

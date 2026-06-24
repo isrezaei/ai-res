@@ -8,6 +8,7 @@ import { t } from "@/lib/i18n";
 import type { Direction, EducationItem } from "@/types";
 import { DateField } from "./DateField";
 import { EditableText } from "./EditableText";
+import { ITEM_HOVER_OUTLINE, itemRemoveButtonProps } from "./HoverFrame";
 import { SecondaryTitleField } from "./SecondaryTitleField";
 import { TimelineRail } from "./TimelineRail";
 
@@ -30,7 +31,16 @@ export const EducationItemBlock = memo(function EducationItemBlock({
   const { updateEducation, removeEducation } = useEducation();
 
   return (
-    <HStack className="group" align="flex-start" justify="space-between" position="relative" dir={direction} pb="2">
+    <HStack
+      className="group"
+      align="flex-start"
+      justify="space-between"
+      position="relative"
+      dir={direction}
+      pb="2"
+      borderRadius="md"
+      _hover={ITEM_HOVER_OUTLINE}
+    >
       <HStack w="full" align="flex-start" gap="3" dir="rtl">
         {/* Date / location column (always on the left, matching Experience). */}
         <VStack width="20mm" dir={direction} gap="1.5">
@@ -94,11 +104,7 @@ export const EducationItemBlock = memo(function EducationItemBlock({
 
       <IconButton
         aria-label={t.education.removeEntry}
-        size="2xs"
-        variant="subtle"
-        rounded="lg"
-        colorPalette="red"
-        className="no-print"
+        {...itemRemoveButtonProps}
         onClick={() => removeEducation(item.id)}
       >
         <TrashIcon />

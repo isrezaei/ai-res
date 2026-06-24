@@ -7,6 +7,7 @@ import { useSkills } from "@/hooks/store/useSkills";
 import { t } from "@/lib/i18n";
 import type { Direction, SkillGroup } from "@/types";
 import { EditableText } from "./EditableText";
+import { ITEM_HOVER_OUTLINE, itemRemoveButtonProps } from "./HoverFrame";
 import { SkillChipsEditor } from "./SkillChipsEditor";
 
 interface SkillGroupBlockProps {
@@ -25,7 +26,14 @@ export const SkillGroupBlock = memo(function SkillGroupBlock({
   const { updateSkillGroup, removeSkillGroup } = useSkills();
 
   return (
-    <Box className="group" position="relative" dir={direction} pb="2">
+    <Box
+      className="group"
+      position="relative"
+      dir={direction}
+      pb="2"
+      borderRadius="md"
+      _hover={ITEM_HOVER_OUTLINE}
+    >
       <HStack justify="space-between" gap="2">
         <EditableText
           value={group.name}
@@ -37,12 +45,7 @@ export const SkillGroupBlock = memo(function SkillGroupBlock({
         />
         <IconButton
           aria-label={t.skills.removeGroup}
-          size="2xs"
-          variant="ghost"
-          colorPalette="red"
-          className="no-print"
-          opacity="0"
-          _groupHover={{ opacity: 1 }}
+          {...itemRemoveButtonProps}
           onClick={() => removeSkillGroup(group.id)}
         >
           <TrashIcon />

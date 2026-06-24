@@ -3,7 +3,7 @@
 import { memo } from "react";
 import { Box, HStack, VStack } from "@chakra-ui/react";
 import { usePersonalInfo } from "@/hooks/store/usePersonalInfo";
-import { CONTENT_BORDER_HOVER, HoverFrame } from "./HoverFrame";
+import { CONTENT_BORDER_HOVER, HoverFrame, SECTION_HOVER_FRAME_REVEAL } from "./HoverFrame";
 import { PersonalInfoContacts } from "./PersonalInfoContacts";
 import { PersonalInfoIdentity } from "./PersonalInfoIdentity";
 import { PersonalInfoSettings } from "./PersonalInfoSettings";
@@ -22,7 +22,7 @@ export const PersonalInfoBlock = memo(function PersonalInfoBlock({
   // a space-between row OUTSIDE the border, and the contacts beneath are wrapped
   // by the hover content border.
   return (
-    <Box className="group">
+    <Box className="group" css={SECTION_HOVER_FRAME_REVEAL}>
       <HStack align="flex-start" gap="22px" pb="22px" dir="rtl">
         {personalInfo.fieldVisibility.photo ? <ProfileImageEditor /> : null}
         <VStack align="stretch" flex="1" minW="0" gap="16px">

@@ -7,6 +7,7 @@ import { useProjects } from "@/hooks/store/useProjects";
 import { t } from "@/lib/i18n";
 import type { Direction, ProjectItem } from "@/types";
 import { EditableText } from "./EditableText";
+import { ITEM_HOVER_OUTLINE, itemRemoveButtonProps } from "./HoverFrame";
 
 interface ProjectItemBlockProps {
   item: ProjectItem;
@@ -22,7 +23,14 @@ export const ProjectItemBlock = memo(function ProjectItemBlock({
   const { updateProject, removeProject } = useProjects();
 
   return (
-    <Box className="group" position="relative" dir={direction} pb="2">
+    <Box
+      className="group"
+      position="relative"
+      dir={direction}
+      pb="2"
+      borderRadius="md"
+      _hover={ITEM_HOVER_OUTLINE}
+    >
       <VStack align="stretch" gap="0.5" pe="6">
         <HStack gap="2" align="baseline">
           <EditableText
@@ -60,15 +68,10 @@ export const ProjectItemBlock = memo(function ProjectItemBlock({
 
       <IconButton
         aria-label={t.projects.removeEntry}
-        size="2xs"
-        variant="ghost"
-        colorPalette="red"
-        className="no-print"
+        {...itemRemoveButtonProps}
         position="absolute"
         insetInlineEnd="0"
         top="0"
-        opacity="0"
-        _groupHover={{ opacity: 1 }}
         onClick={() => removeProject(item.id)}
       >
         <TrashIcon />

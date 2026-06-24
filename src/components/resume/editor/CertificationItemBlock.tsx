@@ -8,6 +8,7 @@ import { t } from "@/lib/i18n";
 import type { CertificationItem, Direction } from "@/types";
 import { DateField } from "./DateField";
 import { EditableText } from "./EditableText";
+import { ITEM_HOVER_OUTLINE, itemRemoveButtonProps } from "./HoverFrame";
 
 interface CertificationItemBlockProps {
   item: CertificationItem;
@@ -23,7 +24,14 @@ export const CertificationItemBlock = memo(function CertificationItemBlock({
   const { updateCertification, removeCertification } = useCertifications();
 
   return (
-    <Box className="group" position="relative" dir={direction} pb="1.5">
+    <Box
+      className="group"
+      position="relative"
+      dir={direction}
+      pb="1.5"
+      borderRadius="md"
+      _hover={ITEM_HOVER_OUTLINE}
+    >
       <VStack align="stretch" gap="0" pe="6">
         <EditableText
           value={item.name}
@@ -51,15 +59,10 @@ export const CertificationItemBlock = memo(function CertificationItemBlock({
 
       <IconButton
         aria-label={t.certifications.removeEntry}
-        size="2xs"
-        variant="ghost"
-        colorPalette="red"
-        className="no-print"
+        {...itemRemoveButtonProps}
         position="absolute"
         insetInlineEnd="0"
         top="0"
-        opacity="0"
-        _groupHover={{ opacity: 1 }}
         onClick={() => removeCertification(item.id)}
       >
         <TrashIcon />

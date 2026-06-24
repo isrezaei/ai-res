@@ -34,7 +34,7 @@ export const SkillChipsEditor = memo(function SkillChipsEditor({
           paddingInlineStart="12px"
           paddingInlineEnd="6px"
           bg="white"
-          style={{ borderRadius: RADII.control, boxShadow: SHADOWS.card }}
+          style={{ borderRadius: RADII.full, boxShadow: SHADOWS.card }}
         >
           <EditableText
             value={skill.name}
@@ -65,12 +65,16 @@ export const SkillChipsEditor = memo(function SkillChipsEditor({
       ))}
       <Button
         size="2xs"
-        variant="ghost"
+        variant="outline"
         colorPalette="gray"
+        height="30px"
+        borderRadius={RADII.full}
+        borderWidth="1.5px"
+        borderStyle="dashed"
         color="fg.muted"
         fontWeight="600"
         className="no-print"
-        _hover={{ color: "accent.fg", bg: "accent.subtle" }}
+        _hover={{ color: "accent.fg", borderColor: "accent.solid", bg: "accent.subtle" }}
         onClick={() => addSkill(groupId)}
       >
         <Box display="inline-flex">

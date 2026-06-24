@@ -7,6 +7,7 @@ import { useLanguages } from "@/hooks/store/useLanguages";
 import { t } from "@/lib/i18n";
 import type { Direction, LanguageItem } from "@/types";
 import { EditableText } from "./EditableText";
+import { ITEM_HOVER_OUTLINE, itemRemoveButtonProps } from "./HoverFrame";
 import { LanguageLevelMeter } from "./LanguageLevelMeter";
 
 interface LanguageItemBlockProps {
@@ -23,7 +24,14 @@ export const LanguageItemBlock = memo(function LanguageItemBlock({
   const { updateLanguage, setLanguageLevel, removeLanguage } = useLanguages();
 
   return (
-    <Box className="group" position="relative" dir={direction} pb="1">
+    <Box
+      className="group"
+      position="relative"
+      dir={direction}
+      pb="1"
+      borderRadius="md"
+      _hover={ITEM_HOVER_OUTLINE}
+    >
       <HStack justify="space-between" gap="2">
         <Box flex="1" minW="0">
           <EditableText
@@ -42,12 +50,7 @@ export const LanguageItemBlock = memo(function LanguageItemBlock({
         />
         <IconButton
           aria-label={t.languages.removeEntry}
-          size="2xs"
-          variant="ghost"
-          colorPalette="red"
-          className="no-print"
-          opacity="0"
-          _groupHover={{ opacity: 1 }}
+          {...itemRemoveButtonProps}
           onClick={() => removeLanguage(item.id)}
         >
           <TrashIcon />

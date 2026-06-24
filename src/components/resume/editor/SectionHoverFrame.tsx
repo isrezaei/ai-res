@@ -36,7 +36,14 @@ export function SectionHoverFrame({ section, title, children }: SectionHoverFram
         <>
           {addEntry ? (
             <Tooltip label={t.sectionToolbar.addEntry}>
-              <IconButton aria-label={t.sectionToolbar.addEntry} {...frameButtonProps} onClick={addEntry}>
+              <IconButton
+                aria-label={t.sectionToolbar.addEntry}
+                size="2xs"
+                variant="solid"
+                colorPalette="accent"
+                borderRadius="6px"
+                onClick={addEntry}
+              >
                 <PlusIcon />
               </IconButton>
             </Tooltip>

@@ -8,6 +8,7 @@ import { t } from "@/lib/i18n";
 import type { Direction, ExperienceItem } from "@/types";
 import { DateField } from "./DateField";
 import { EditableText } from "./EditableText";
+import { ITEM_HOVER_OUTLINE, itemRemoveButtonProps } from "./HoverFrame";
 import { ResponsibilityListEditor } from "./ResponsibilityListEditor";
 import { SecondaryTitleField } from "./SecondaryTitleField";
 import { TimelineRail } from "./TimelineRail";
@@ -29,7 +30,16 @@ export const ExperienceItemBlock = memo(function ExperienceItemBlock({
     updateExperience(item.id, { period: { ...item.period, ...patch } });
 
   return (
-    <HStack className="group" align={"flex-start"} justify={"space-between"} position="relative" dir={direction} pb="2">
+    <HStack
+      className="group"
+      align={"flex-start"}
+      justify={"space-between"}
+      position="relative"
+      dir={direction}
+      pb="2"
+      borderRadius="md"
+      _hover={ITEM_HOVER_OUTLINE}
+    >
       {/* dir=ltr forces the date column to the left for every entry, regardless
           of the entry's own text direction, so the timeline reads consistently. */}
 
@@ -119,11 +129,7 @@ export const ExperienceItemBlock = memo(function ExperienceItemBlock({
 
       <IconButton
         aria-label={t.experience.removeEntry}
-        size="2xs"
-        variant="subtle"
-        rounded={"lg"}
-        colorPalette="red"
-        className="no-print"
+        {...itemRemoveButtonProps}
         onClick={() => removeExperience(item.id)}
       >
         <TrashIcon />

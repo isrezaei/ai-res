@@ -34,7 +34,14 @@ export const SectionTitleBlock = memo(function SectionTitleBlock({
         >
           {section.title}
         </Heading>
-        {showRule ? <Box flex="1" height="1px" bg={accentColor} opacity="0.18" /> : null}
+        {showRule ? (
+          <Box
+            flex="1"
+            height="1px"
+            opacity="0.18"
+            style={{ background: `linear-gradient(90deg, ${accentColor}, transparent)` }}
+          />
+        ) : null}
       </HStack>
     </Box>
   );

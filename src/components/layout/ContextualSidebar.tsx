@@ -56,7 +56,7 @@ export function ContextualSidebar() {
             {activePanel === "templates" ? <TemplatesPanel /> : null}
             {activePanel === "rearrange" ? <RearrangePanel /> : null}
             <Box mt="26px">
-              <AdvertisingUi isShow={true} AdvertisingId={"pos-article-display-112303"} />
+              <AdvertisingUi isShow={true} AdvertisingId={"pos-article-display-111915"} />
             </Box>
           </Box>
         </Box>
@@ -64,3 +64,4 @@ export function ContextualSidebar() {
     </Box>
   );
 }
+
