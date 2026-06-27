@@ -69,6 +69,13 @@ export interface ThemeSettings {
   pageMargin: number;
   /** Vertical gap between sections in millimetres. 2 – 12. */
   sectionSpacing: number;
+  /**
+   * Intensity multiplier for the COLOURED column of the multi-column templates
+   * (the tinted sidebar / dark aside / photo aside / timeline panel). 1 keeps each
+   * template's original tint; below 1 lightens it, above 1 strengthens it. Pure
+   * presentation, so it lives here and round-trips into the PDF render. 0.5 – 1.5.
+   */
+  columnIntensity: number;
 }
 
 export interface ThemePreset {

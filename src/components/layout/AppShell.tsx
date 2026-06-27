@@ -1,5 +1,6 @@
 import { Box, VStack } from "@chakra-ui/react";
 import type { ReactNode } from "react";
+import { TemplateSwitchAd } from "@/components/ads/TemplateSwitchAd";
 import { ContextualSidebar } from "./ContextualSidebar";
 import { TopBar } from "./TopBar";
 
@@ -19,6 +20,8 @@ export function AppShell({ children }: AppShellProps) {
         {children}
         <ContextualSidebar />
       </Box>
+      {/* Every 2nd template switch shows an ad modal (no-print, editor-only). */}
+      <TemplateSwitchAd />
     </VStack>
   );
 }

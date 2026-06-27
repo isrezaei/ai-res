@@ -30,6 +30,8 @@ export const createThemeSlice: SliceCreator<ThemeSlice> = (set) => ({
   setPageMargin: (margin) => patchTheme(set, () => ({ pageMargin: clamp(margin, 8, 24) })),
   setSectionSpacing: (spacing) =>
     patchTheme(set, () => ({ sectionSpacing: clamp(spacing, 2, 12) })),
+  setColumnIntensity: (intensity) =>
+    patchTheme(set, () => ({ columnIntensity: clamp(intensity, 0.5, 1.5) })),
   setTemplate: (templateId) =>
     set((state) => ({
       resume: { ...state.resume, templateId, updatedAt: touch() },

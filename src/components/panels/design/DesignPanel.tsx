@@ -29,6 +29,7 @@ export function DesignPanel() {
     setLineHeight,
     setPageBackground,
     setBackgroundIntensity,
+    setColumnIntensity,
   } = useDesign();
 
   return (
@@ -72,6 +73,19 @@ export function DesignPanel() {
                 onChange={setBackgroundIntensity}
               />
             ) : null}
+            {/* Coloured-column intensity — only the column templates use it, but it is
+                always available; 100% reproduces each template's original tint. */}
+            <LabeledSlider
+              label={t.design.columnIntensity}
+              value={theme.columnIntensity}
+              min={0.5}
+              max={1.5}
+              step={0.05}
+              minLabel={t.design.lighter}
+              maxLabel={t.design.stronger}
+              valueText={`${Math.round(theme.columnIntensity * 100)}%`}
+              onChange={setColumnIntensity}
+            />
           </VStack>
         </PanelGroup>
         <AdvertisingUi AdvertisingId={BLOCK_AD_IDS[1]} isShow={true} />

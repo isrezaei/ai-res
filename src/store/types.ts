@@ -93,6 +93,7 @@ export interface ThemeSlice {
   setLineHeight: (lineHeight: number) => void;
   setPageMargin: (margin: number) => void;
   setSectionSpacing: (spacing: number) => void;
+  setColumnIntensity: (intensity: number) => void;
   setTemplate: (templateId: TemplateId) => void;
 }
 

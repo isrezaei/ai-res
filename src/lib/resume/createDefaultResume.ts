@@ -60,6 +60,8 @@ export function createDefaultTheme(): ThemeSettings {
     lineHeight: 1.5,
     pageMargin: 16,
     sectionSpacing: 6,
+    // 1 = each coloured-column template keeps its original tint (the current look).
+    columnIntensity: 1,
   };
 }
 
